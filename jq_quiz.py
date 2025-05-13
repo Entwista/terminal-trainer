@@ -6,13 +6,6 @@ import subprocess
 import json
 import tempfile
 import os
-import platform
-
-def clear_terminal():
-    if platform.system() == "Windows":
-        os.system('cls')
-    else:
-        os.system('clear')
 
 questions = [
     {
@@ -174,7 +167,7 @@ questions = [
 random.shuffle(questions)
 score = 0
 
-clear_terminal()
+os.system('clear')
 print("\n📘 JQ QUIZ\n")
 
 for q in questions:
@@ -191,7 +184,7 @@ for q in questions:
     if not selected_cmd:
         print("❌ Invalid option.")
         input("Press Enter to continue...")
-        clear_terminal()
+        os.system('clear')
         continue
 
     with tempfile.NamedTemporaryFile(mode='w+', delete=True) as tmp:
@@ -221,6 +214,6 @@ for q in questions:
         print(f"❌ Incorrect. The correct answer was {q['answer']}")
 
     input("Press Enter to continue...")
-    clear_terminal()
+    os.system('clear')
 
 print(f"\n🎯 Quiz complete! You got {score} out of {len(questions)} correct.")
