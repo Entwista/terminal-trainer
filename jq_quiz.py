@@ -206,7 +206,7 @@ for q in questions:
     if actual_output == expected:
         print("✅ Correct!")
         try:
-            subprocess.run(['paplay', '/usr/share/sounds/freedesktop/stereo/complete.oga'], stderr=subprocess.DEVNULL)
+            subprocess.Popen(['paplay', '/usr/share/sounds/freedesktop/stereo/complete.oga'], stderr=subprocess.DEVNULL)
         except Exception:
             pass  # Ignore sound errors if sound player not available
         score += 1
