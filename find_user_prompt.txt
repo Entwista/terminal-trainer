@@ -1,0 +1,43 @@
+Please create me another Bash quiz script with a different find question.
+
+Requirements
+
+    One fenced code block only, labelled bash, containing the full script.
+
+    Inside the script, use a here‑document (cat <<'EOF' > file_structure.txt … EOF) to write a small text file that shows the directory tree (or file list) the quiz will operate on.
+    After writing it, the script should cat that file so the learner can see the data it describes, then create the matching files/directories in a temporary folder for the find command to run against.
+
+    Follow the same quiz structure as before (options A–D, read user input, give ✅/❌ feedback, play the sound on success).
+
+    Pick a find concept that is different from simply “search files by name ( -name '*.txt' )”; e.g. filtering by size (-size), modification time (-mtime), permissions (-perm), depth control (-maxdepth/-mindepth), pruning (-prune), running commands with -exec, etc.
+
+    Keep the question and correct answer clear in the feedback message.
+
+Enclose the entire Bash script in one triple‑backtick block like:
+#!/bin/bash
+
+set -x
+cat file_structure.txt
+set +x
+
+# Build the sample directory tree described in file_structure.txt
+mkdir -p sandbox/{logs,archive}
+touch sandbox/logs/{app.log,server.log}
+touch sandbox/archive/{old1.log,old2.txt}
+
+echo "The output we want is:"
+find sandbox -type f -name '*.log' -maxdepth 2 -mtime +365
+echo "Which of these commands would produce that output?"
+echo "A: find sandbox -name '*.log' -type f -mtime +365"
+echo "B: find sandbox -type f -name '*.log' -maxdepth 2 -mtime +365"
+echo "C: find sandbox -type f -mtime +365 -maxdepth 2 -name '*.log'"
+echo "D: find sandbox -maxdepth 2 -type f -name '*.log' -mtime -365"
+
+read -p 'Enter your answer (A/B/C/D): ' answer
+
+if [ "$answer" == "B" ]; then
+    echo '✅ Correct! Well done.'
+    paplay /usr/share/sounds/freedesktop/stereo/complete.oga &
+else
+    echo "❌ Incorrect. The correct answer is B: find sandbox -type f -name '*.log' -maxdepth 2 -mtime +365"
+fi

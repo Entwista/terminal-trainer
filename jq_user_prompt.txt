@@ -1,0 +1,37 @@
+Please create me another Bash quiz script with a different jq question.
+
+**Requirements**
+
+1. **One fenced code block** only, labelled `bash`, containing the full script.
+2. Inside the script, **use a here‑document** (`cat <<'EOF' > <filename>.json … EOF`) to write the JSON file that the quiz will use.  
+   *After writing it, the script should `cat` the file so the learner can see the data.*
+3. Follow the same quiz structure as before (options A–D, read user input, give ✅/❌ feedback, play the sound on success).
+4. Pick a jq concept that is *different* from “`.users | sort_by(.name)`”; e.g. filtering, mapping, grouping, etc.
+5. Keep the question and correct answer clear in the feedback message.
+
+Enclose the entire Bash script in one triple‑backtick block like:
+
+```bash
+#!/bin/bash
+
+set -x
+cat q.json
+set +x
+
+echo "The output we want is:"
+jq '.users | sort_by(.name)' q.json
+echo "Which of these would create this output?"
+echo "A: jq '.users | order_by(.name)' q.json"
+echo "B: jq '.users | sort_by(.name)' q.json"
+echo "C: jq 'sort(users.name)' q.json"
+echo "D: jq '.users[].name | sort' q.json"
+
+read -p "Enter your answer (A/B/C/D): " answer
+
+if [ "$answer" == "B" ]; then
+    echo "✅ Correct! Well done."
+	paplay /usr/share/sounds/freedesktop/stereo/complete.oga &
+else
+    echo "❌ Incorrect. The correct answer is B: jq '.users | sort_by(.name)' q.json"
+fi
+```
